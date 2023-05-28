@@ -2072,5 +2072,9 @@ export {
     pairBytecode,
     erc20Abi,
     erc20Bytecode,
-    UniswapV3Abi
+    UniswapV3Abi,
+    wethAddressMainnet,
+    uniswapV2RouterAddressMainnet,
+    uniswapFactoryAddressMainnet,
+    universalRouterAddressMainnet
 }
