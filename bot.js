@@ -2,7 +2,6 @@
 import { Wallet, ethers } from "ethers"
 import {
     FlashbotsBundleProvider,
-    FlashbotsBundleProvider,
     FlashbotsBundleResolution,
 } from "@flashbots/ethers-provider-bundle"
 import * as dotenv from "dotenv"
@@ -34,10 +33,10 @@ const wsProviderUrl = WS_PROVIDER_URL
 const bribeToMiners = ethers.utils.parseUnits("20", "gwei")
 const buyAmount = ethers.utils.parseUnits("0.1", "ether")
 
-const provider = new ethers.provider.JsonRpcProvider(httpProviderUrl)
-const wsProvider = new ethers.provider.WebSocketProvider(wsProviderUrl)
+const provider = new ethers.providers.JsonRpcProvider(httpProviderUrl)
+const wsProvider = new ethers.providers.WebSocketProvider(wsProviderUrl)
 
-// setup contracts and providers
+// 1.3. Setup contracts and providers
 const signingWallet = new Wallet(privateKey).connect(provider)
 const uniswapV3Interface = new ethers.utils.Interface(UniswapV3Abi)
 const factoryUniswapFactory = new ethers.ContractFactory(
@@ -53,6 +52,7 @@ const uniswap = new ethers.ContractFactory(UniswapAbi, UniswapBytecode, signingW
 let flashbotsProvider = null
 let chainId = 1
 
+// 2. Create the start function to listen to transactions
 // 2.5. Decode uniswap universal router transactions
 const decodeUniversalRouterSwap = (input) => {
     const abiCoder = new ethers.utils.AbiCoder()
@@ -81,7 +81,7 @@ const decodeUniversalRouterSwap = (input) => {
     }
 }
 
-// setup initial checks
+// 3. Setup initial checks
 const initialChecks = async (tx) => {
     let transaction = null
     let decoded = null
@@ -265,7 +265,7 @@ const processTransaction = async (tx) => {
     const blockNumber = await provider.getBlockNumber()
 
     console.log("Simulating...")
-    const simulation = await flashbotsProvider.simulate(signingTransactions, blockNumber + 1)
+    const simulation = await flashbotsProvider.simulate(signedTransactions, blockNumber + 1)
     if (simulation.firstRevert) {
         return console.log("Simulation error", simulation.firstRevert)
     }
@@ -315,3 +315,15 @@ const start = async () => {
 }
 
 start()
+
+// Next steps:
+// - calculate gas costs
+// - estimate the next base fee
+// - calculate amounts out locally
+// - use multiple block builders besides flashbots
+// - reduce gas costs by using an assembly yul contract
+// - use multiple cores from your computer to improve performance
+// - calculate the transaction array for type 0 and type 2 transactions
+// - implement multiple dexes like uniswap, shibaswap, sushiswap, and others
+// - calculate the pair address locally with a function without a blockchain request
+// - calculate the exact amount you'll get in profit after the first, middle and last trade without request and without loops
