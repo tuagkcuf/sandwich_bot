@@ -2,5 +2,25 @@
   "dependencies": {
     "@flashbots/ethers-provider-bundle": "^0.6.1",
     "ethers": "5.7.2"
-  }
+  },
+  "name": "sandwich_bot",
+  "description": "sandwich bot using flashbots",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "type": "module",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuagkcuf/sandwich_bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "APACHE-2.0",
+  "bugs": {
+    "url": "https://github.com/tuagkcuf/sandwich_bot/issues"
+  },
+  "homepage": "https://github.com/tuagkcuf/sandwich_bot#readme"
 }
